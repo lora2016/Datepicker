@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DatePicker</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <input type="text"  v-model="dataMsg" id="time" placeholder="YYYY-MM-DD" style="margin:100px 0 0 100px;" @focus="show = true">
+    
+    <ui-date v-if="show"></ui-date>
+    
+    
+    <template id="tem-ui-date">
+        <div class="ui-date">
+            <div class="ui-date-head">
+                <b class="ui-data-pre" @click="change('-')"></b>
+                <b class="ui-data-next" @click="change('+')"></b>
+
+                <div class="ui-data-select ui-year" 
+                   :class="[slider.year? 'active': '']" >
+                    <div class="data-hd">
+                        <b class="data-icon" @click="active('year')"></b>
+                        <span>{{date.year}}</span>
+                    </div>
+                    <div class="data-bd">
+                        <ul>
+                            <li v-for="year in years" 
+                                track-by="$index" 
+                                @click="changeDay(year, '')">
+                                <a href="javascript:;">{{year}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ui-data-select ui-month" 
+                   :class="[slider.month? 'active': '']" >
+                    <div class="data-hd">
+                        <b class="data-icon" @click="active('month')"></b>
+                        <span>{{date.month}}</span> 
+                    </div>
+                    <div class="data-bd">
+                        <ul>
+                            <li v-for="month in months" 
+                                track-by="$index" 
+                                @click="changeDay('', month)">
+                                <a href="javascript:;">{{month}}</a></li>  
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ui-date-title"> 
+                <ul>
+                    <li v-for="week in weeks">{{week}}</li>
+                </ul>
+            </div>
+            <div class="ui-date-body" id="j-data-day"> 
+                <ul class="clearfix">
+                    <li v-for="day in days"  track-by="$index" :class="[day == date.day? 'active': '']">
+                        <a href="javascript:;" @click="chengeOther(day)">{{day}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </template>
+    
+    <script src="js/moment-0.2.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        Vue.component('ui-date', uiDate);
+        var vm = new Vue({
+            el: 'body',
+            
+            //定义显示和消息
+            data:{
+                show: false,
+                dataMsg: ''
+            },
+            
+            methods: {
+                callback: function() {
+                    //回调函数
+                }
+            },
+            
+            //从组件中拿到消息
+            events:{
+                'isShow': function(bl, date) {
+                    this.$data.show = bl;
+                    this.$data.dataMsg = date;
+                    this.callback();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

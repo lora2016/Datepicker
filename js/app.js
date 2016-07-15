@@ -21,7 +21,7 @@ function _yearTem() {
         arr.push(i)
     }
     for (var k = nowYear; k < (nowYear + 30); k++) {
-        arr.push(i)
+        arr.push(k)
     }
     return arr;
 }
@@ -125,7 +125,7 @@ var uiDate = Vue.extend({
 
         //重新注入
         render: function(str) {
-            this.$data.date.day = 1;
+            this.$data.date.day = day;
             var time = moment().analysis(str);
             this.$data.days = _day(time)
         }
